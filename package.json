@@ -1,0 +1,26 @@
+{
+  "name": "backend-conta-segura",
+  "version": "1.0.0",
+  "description": "API de Gerenciamento de Dados e Autenticação (Garantida por JWT)",
+  "main": "servidor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node servidor.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Devs097518/Backend-Conta-Segura.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Devs097518/Backend-Conta-Segura/issues"
+  },
+  "homepage": "https://github.com/Devs097518/Backend-Conta-Segura#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
