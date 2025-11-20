@@ -20,6 +20,7 @@ const users = [
 ];
 
 
+// (te conheço?) ? "Entra, mas vai rápido" : "Cai fora!"
 
 // Rota para realizar a autenticação e gerar o token
 // é a rota que gera a token, aqui tu consegue ver se o usuario e senha batem
@@ -45,7 +46,7 @@ app.post('/login', (req, res) => {
 
 
 
-
+// "Se o carinha pode continuar aqui ou tem que sair"
 
 // Middleware para autenticar o token
 // verifica se a token é valida
@@ -60,6 +61,9 @@ const authenticateToken = (req, res, next) => {
         next();
     });
 };
+
+
+
 
 
 
@@ -79,7 +83,6 @@ app.get('/admin', authenticateToken, (req, res) => {
     if (req.user.role !== 'admin') {
         return res.status(403).json({ message: 'Acesso negado!' });
     }
-
     res.status(200).json({ message: 'Bem-vindo à área administrativa!' });
 });
 
