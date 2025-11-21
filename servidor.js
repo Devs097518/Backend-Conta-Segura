@@ -27,6 +27,9 @@ const users = [
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
+
+    // obs : não iremos armazenar no banco de dados a senha em texto puro, mas sim a senha criptografada. Ou seja, não iremos fazer essa comparaçãp direta, teremos que fazer uma comparação por fora 
+    //                                                                V               V
     const user = users.find(user => user.username === username && user.password === password);
     if (user) {
         const token = jwt.sign(
