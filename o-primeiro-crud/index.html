@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Interface</title>
+    <style>
+        label, input{margin: 5px;}
+    </style>
+</head>
+
+<body>
+
+    <h1>Create</h1>
+
+    <label for="name"> Name: </label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="idade"> idade: </label>
+    <input type="text" id="idade" name="idade" required>
+
+    <button type="submit" onclick="criar()">Create</button>
+
+
+    <hr>
+
+
+    <h1>Read</h1>
+
+    <p id="resposta"></p>
+    <button onclick="ler()">Read</button>
+
+
+    <hr>
+
+
+    <h1>Update</h1>
+
+    <label for="">id</label>
+    <input id="idU" type="text">
+
+    <label for="">Nome</label>
+    <input id="nameU" type="text">
+
+    <label for="">Idade</label>
+    <input id="idadeU" type="number">
+
+    <button onclick="editar()">Update</button>
+
+
+    <hr>
+
+
+    <h1>Delete</h1>
+    <label for="">id</label>
+    <input id="idD" type="text">
+    <button onclick="deletar()">Delete</button>
+
+
+    <script>
+        async function criar() {
+
+            try {
+                let nome = document.getElementById("name").value;
+                let idade = document.getElementById("idade").value;
+
+                let dadosSoltos = await fetch("http://localhost:3000/userAdd", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+
+                    body: JSON.stringify({
+                        nome,
+                        idade,
+                    }),
+                });
+            } catch (error) {
+                console.log("erro ao acessar os dados", error);
+            }
+
+        }
+
+        const ler = async () => {
+            try {
+                
+                let resposta = document.getElementById("resposta");
+                const valores = await fetch("http://localhost:3000/userAdd");
+
+                const dadosConvertidos = await valores.json();
+                console.log(dadosConvertidos);
+            }
+            catch (error) {
+                console.log("erro ao ler os dados", error);
+            }
+        }
+
+
+        async function editar() {
+            try {
+                let idU = document.getElementById("idU").value;
+                let nameU = document.getElementById("nameU").value;
+                let idadeU = document.getElementById("idadeU").value;
+
+                let dadosAadicionar = await fetch(
+                    `http://localhost:3000/userAdd/${idU}`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            nome: `${nameU}`,
+                            idade: `${idadeU}`,
+                        }),
+                    },
+                );
+
+                
+
+            } catch (error) {
+                console.log("erro ao acessar os dados", error);
+            }
+        }
+
+        const deletar = async () => {
+            try {
+                let idD = document.getElementById("idD").value;
+
+                let dadosDeletar = await fetch(
+                    `http://localhost:3000/userAdd/${idD}`,
+                    {
+                        method: "DELETE",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    },
+                );
+
+            } catch (error) {
+                console.log("erro ao deletar os dados", error);
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

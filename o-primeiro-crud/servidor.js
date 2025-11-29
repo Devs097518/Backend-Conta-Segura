@@ -1,0 +1,95 @@
+import express from "express";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import cors from "cors";
+import UserInfoSchema from "./Modelo.js";
+
+dotenv.config();
+
+const app = express();
+const PORT = 3000;
+
+// Middleware - Uma função que trata as informações recebidas
+
+
+
+app.use(express.json());
+app.use(cors());
+
+
+// Conexão com o banco de dados MongoDB
+const connetDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("Conectado ao MongoDB");
+  } catch (error) {
+    console.log("Deu erro ao conectar com o MongoDB", error);
+  }
+};
+
+
+
+connetDB();
+
+
+
+// CREATE
+app.post("/userADD", async (req, res) => {
+  try {
+    const novoUser = await UserInfoSchema.create(req.body);
+    res.json(novoUser);
+  } catch (error) {
+    res.json({ error: error });
+  }
+});
+
+
+//READ
+app.get("/userADD" , async (req,res) => {
+  try{
+    const Users = await UserInfoSchema.find();
+    res.json(Users)
+  }
+  catch(error){
+    res.json({ error: error})
+  }
+});
+
+
+//UPDATE
+app.put("/userADD/:id" , async (req,res) => {
+  try{
+    const EditarUser = await UserInfoSchema.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {new : true}
+    );
+
+    res.json(EditarUser)
+  }
+  catch(error){
+    res.json({ error: error})
+  }
+});
+
+
+//DELETE
+app.delete("/userADD/:id" , async (req,res) => {
+  try{
+    const DeletarUser = await UserInfoSchema.findByIdAndDelete(
+      req.params.id,
+    );
+
+    res.json(DeletarUser)
+  }
+  catch(error){
+    res.json({ error: error})
+  }
+});
+
+
+
+app.listen(PORT, () => console.log(`O servidor está rodando na porta ${PORT}`));
+
+
+
